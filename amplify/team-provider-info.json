@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-dailymsgreactapp-dev-201157-authRole",
+      "UnauthRoleArn": "arn:aws:iam::797814207759:role/amplify-dailymsgreactapp-dev-201157-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::797814207759:role/amplify-dailymsgreactapp-dev-201157-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-dailymsgreactapp-dev-201157-deployment",
+      "UnauthRoleName": "amplify-dailymsgreactapp-dev-201157-unauthRole",
+      "StackName": "amplify-dailymsgreactapp-dev-201157",
+      "StackId": "arn:aws:cloudformation:us-east-1:797814207759:stack/amplify-dailymsgreactapp-dev-201157/ce1081f0-6f2a-11eb-9751-12cad4668dfd",
+      "AmplifyAppId": "d1oashi9383y7j"
+    },
+    "categories": {
+      "auth": {
+        "dailymsgreactapp6870a1d9": {}
+      }
+    }
+  }
+}
