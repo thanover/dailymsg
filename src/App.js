@@ -2,85 +2,57 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/nav/Header";
 import HomePage from "./components/HomePage";
 import { Route, Switch } from "react-router-dom";
-import ListsListPage from "./components/lists/ListsListPage";
-import ListPage from "./components/lists/ListPage";
-import { Auth, Hub } from "aws-amplify";
-
-const initialFormState = {
-  username: "",
-  password: "",
-  authCode: "",
-  formType: "signUp",
-};
+import ListListsPage from "./components/lists/ListListsPage";
+import ListEditPage from "./components/lists/ListEditPage";
+import { Auth } from "aws-amplify";
+import SignInPage from "./components/auth/SignInPage";
+import { getUserById } from "./api/userApi";
+import { useHistory } from "react-router-dom";
 
 function App() {
-  const [formState, updateFormState] = useState(initialFormState);
-  const [user, updateUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [cognitoUser, setCognitoUser] = useState(null);
 
   useEffect(() => {
     checkUser();
   }, []);
 
+  useEffect(() => {
+    console.log("cognito User Changed: " + cognitoUser);
+  }, [cognitoUser]);
+
+  useEffect(() => {
+    console.log("User Changed: " + user);
+  }, [user]);
+
+  let history = useHistory();
+
   async function checkUser() {
     try {
-      const _user = await Auth.currentAuthenticatedUser();
-      console.log(_user);
-      updateUser(_user);
-      updateFormState(() => ({ ...formState, formType: "signedIn" }));
+      const cognitoUser = await Auth.currentAuthenticatedUser();
+      setCognitoUser(cognitoUser);
+      if (cognitoUser) {
+        try {
+          getUserById(cognitoUser.username).then((_user) => {
+            setUser(_user);
+            console.log(JSON.stringify(user));
+            console.log(_user.lists);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
     } catch (err) {
       console.log("user error:", err);
     }
   }
 
-  function onChange(e) {
-    e.persist();
-    updateFormState(() => ({ ...formState, [e.target.name]: e.target.value }));
-  }
-
-  const { formType } = formState;
-  async function signUp() {
-    const { username, password } = formState;
-    try {
-      const { user } = await Auth.signUp({
-        username,
-        password,
-      });
-      console.log(user);
-      updateFormState(() => ({ ...formState, formType: "confirmSignUp" }));
-    } catch (error) {
-      console.log("error signing up:", error);
-    }
-  }
-  async function confirmSignUp() {
-    debugger;
-    try {
-      const { username, authCode } = formState;
-      console.log(authCode);
-      await Auth.confirmSignUp(username, authCode);
-      updateFormState(() => ({ ...formState, formType: "signIn" }));
-    } catch (error) {
-      console.log("error confirming", error);
-    }
-  }
-
-  async function signIn() {
-    try {
-      const { username, password } = formState;
-      await Auth.signIn(username, password);
-      updateFormState(() => ({ ...formState, formType: "signedIn" }));
-    } catch (error) {
-      console.log("error signing in", error);
-    }
-  }
-
-  async function switchToSignIn() {
-    updateFormState(() => ({ ...formState, formType: "signIn" }));
-  }
-
   async function signOut() {
     try {
       Auth.signOut();
-      updateFormState(() => ({ ...formState, formType: "signIn" }));
+      setUser(null);
+      setCognitoUser(null);
+      history.push("/");
     } catch (error) {
       console.log("error logging out:", error);
     }
@@ -88,54 +60,38 @@ function App() {
 
   return (
     <div className="container-fluid">
-      <Header />
+      <Header user={cognitoUser} signOut={signOut} />
       <Switch>
         <Route path="/" exact component={HomePage} />
-        <Route path="/lists/" component={ListsListPage} />
-        <Route path="/list/:listId" component={ListPage} />
+        <Route
+          path="/lists"
+          render={(props) => <ListListsPage {...props} user={user} />}
+        />
+        <Route
+          path="/list/:id"
+          render={(props) => (
+            <ListEditPage {...props} user={user} setUser={setUser} />
+          )}
+        />
+        <Route
+          path="/list/"
+          render={(props) => (
+            <ListEditPage {...props} user={user} setUser={setUser} />
+          )}
+        />
+        <Route
+          path="/signin"
+          render={(props) => (
+            <SignInPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              cognitoUser={cognitoUser}
+              setCognitoUser={setCognitoUser}
+            />
+          )}
+        />
       </Switch>
-      {formType === "signUp" && (
-        <div>
-          <input name="username" onChange={onChange} placeholder="username" />
-          <input
-            name="password"
-            type="password"
-            onChange={onChange}
-            placeholder="password"
-          />
-          <button onClick={signUp}>Sign Up</button>
-          <button onClick={switchToSignIn}>Sign In</button>
-        </div>
-      )}
-      {formType === "confirmSignUp" && (
-        <div>
-          <input
-            name="authCode"
-            onChange={onChange}
-            placeholder="Confirmation Code"
-          />
-          <button onClick={confirmSignUp}>Complete Sign Up</button>
-        </div>
-      )}
-      {formType === "signIn" && (
-        <div>
-          <input name="username" onChange={onChange} placeholder="username" />
-          <input
-            name="password"
-            type="password"
-            onChange={onChange}
-            placeholder="password"
-          />
-          <button onClick={signIn}>Sign In</button>
-        </div>
-      )}
-
-      {formType === "signedIn" && (
-        <div>
-          <h1>Welcome {user.attributes.email}</h1>
-          <button onClick={signOut}>Sign Out</button>
-        </div>
-      )}
     </div>
   );
 }
