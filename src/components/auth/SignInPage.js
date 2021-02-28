@@ -31,7 +31,6 @@ function SignInPage({ user, setUser, cognitoUser, setCognitoUser }) {
           password,
         })
       );
-      console.log(cognitoUser);
       await addUserToDatabase();
       updateFormState(() => ({ ...formState, formType: "confirmSignUp" }));
     } catch (error) {
@@ -55,7 +54,6 @@ function SignInPage({ user, setUser, cognitoUser, setCognitoUser }) {
   async function confirmSignUp() {
     try {
       const { username, authCode, password } = formState;
-      console.log(authCode);
       await Auth.confirmSignUp(username, authCode);
       setCognitoUser(await Auth.signIn(username, password));
       setUser(await getUserById(cognitoUser.username));

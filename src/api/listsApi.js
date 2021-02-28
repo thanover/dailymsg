@@ -17,7 +17,7 @@ export function getListById(listId) {
     .catch(handleError);
 }
 
-export function saveLists(list) {
+export function saveList(list) {
   return fetch(baseUrl + (list.id || ""), {
     method: list.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },

@@ -8,6 +8,9 @@ import { Auth } from "aws-amplify";
 import SignInPage from "./components/auth/SignInPage";
 import { getUserById } from "./api/userApi";
 import { useHistory } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MessageEditPage from "./components/messages/MessageEditPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,13 +20,9 @@ function App() {
     checkUser();
   }, []);
 
-  useEffect(() => {
-    console.log("cognito User Changed: " + cognitoUser);
-  }, [cognitoUser]);
+  useEffect(() => {}, [cognitoUser]);
 
-  useEffect(() => {
-    console.log("User Changed: " + user);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   let history = useHistory();
 
@@ -35,8 +34,6 @@ function App() {
         try {
           getUserById(cognitoUser.username).then((_user) => {
             setUser(_user);
-            console.log(JSON.stringify(user));
-            console.log(_user.lists);
           });
         } catch (error) {
           console.log(error);
@@ -60,6 +57,7 @@ function App() {
 
   return (
     <div className="container-fluid">
+      <ToastContainer autoClose={3000} hideProgressBar />
       <Header user={cognitoUser} signOut={signOut} />
       <Switch>
         <Route path="/" exact component={HomePage} />
@@ -77,6 +75,18 @@ function App() {
           path="/list/"
           render={(props) => (
             <ListEditPage {...props} user={user} setUser={setUser} />
+          )}
+        />
+        <Route
+          path="/message/:list/:id"
+          render={(props) => (
+            <MessageEditPage {...props} user={user} setUser={setUser} />
+          )}
+        />
+        <Route
+          path="/message/:list"
+          render={(props) => (
+            <MessageEditPage {...props} user={user} setUser={setUser} />
           )}
         />
         <Route
