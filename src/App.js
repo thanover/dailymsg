@@ -6,11 +6,12 @@ import ListListsPage from "./components/lists/ListListsPage";
 import ListEditPage from "./components/lists/ListEditPage";
 import { Auth } from "aws-amplify";
 import SignInPage from "./components/auth/SignInPage";
-import { getUserById } from "./api/userApi";
 import { useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MessageEditPage from "./components/messages/MessageEditPage";
+import { API, graphqlOperation } from "aws-amplify";
+import { getUser } from "./graphql/queries";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,9 +21,13 @@ function App() {
     checkUser();
   }, []);
 
-  useEffect(() => {}, [cognitoUser]);
+  useEffect(() => {
+    console.log(cognitoUser);
+  }, [cognitoUser]);
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   let history = useHistory();
 
@@ -32,8 +37,10 @@ function App() {
       setCognitoUser(cognitoUser);
       if (cognitoUser) {
         try {
-          getUserById(cognitoUser.username).then((_user) => {
-            setUser(_user);
+          API.graphql(
+            graphqlOperation(getUser, { id: cognitoUser.username })
+          ).then((_user) => {
+            setUser(_user.data.getUser);
           });
         } catch (error) {
           console.log(error);
@@ -68,25 +75,45 @@ function App() {
         <Route
           path="/list/:id"
           render={(props) => (
-            <ListEditPage {...props} user={user} setUser={setUser} />
+            <ListEditPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              checkUser={checkUser}
+            />
           )}
         />
         <Route
           path="/list/"
           render={(props) => (
-            <ListEditPage {...props} user={user} setUser={setUser} />
+            <ListEditPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              checkUser={checkUser}
+            />
           )}
         />
         <Route
           path="/message/:list/:id"
           render={(props) => (
-            <MessageEditPage {...props} user={user} setUser={setUser} />
+            <MessageEditPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              checkUser={checkUser}
+            />
           )}
         />
         <Route
           path="/message/:list"
           render={(props) => (
-            <MessageEditPage {...props} user={user} setUser={setUser} />
+            <MessageEditPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              checkUser={checkUser}
+            />
           )}
         />
         <Route

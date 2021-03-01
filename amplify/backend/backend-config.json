@@ -1,17 +1,28 @@
 {
   "auth": {
-    "dailymsgreactapp6870a1d9": {
+    "dailymsg69c97232": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
+  "api": {
+    "dailymsg": {
+      "service": "AppSync",
       "providerPlugin": "awscloudformation",
-      "type": "manual"
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7,
+              "description": "dailymsg-dev"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
     }
   }
 }

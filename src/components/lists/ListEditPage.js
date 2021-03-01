@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import ListEditForm from "./ListEditForm";
 import { toast } from "react-toastify";
-import * as listsApi from "../../api/listsApi";
-import * as userApi from "../../api/userApi";
+// import * as listsApi from "../../api/listsApi";
+// import * as userApi from "../../api/userApi";
 import MessageList from "../messages/MessageList";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateList, createList } from "../../graphql/mutations";
+import { getList } from "../../graphql/queries";
 
-const ListEditPage = ({ user, setUser, match, history }) => {
+const ListEditPage = ({ user, match, history, checkUser }) => {
   const id = match.params.id ? match.params.id : null;
   const [errors, setErrors] = useState({});
   const [list, setList] = useState({
     id: null,
     name: "",
-    ownerId: user.email,
-    messages: [],
+    listOwnerId: user.id,
   });
 
   useEffect(() => {
     if (id) {
-      listsApi.getListById(id).then((_list) => {
-        setList(_list);
+      API.graphql(graphqlOperation(getList, { id: id })).then((res) => {
+        setList(res.data.getList);
       });
     }
   }, [id]);
@@ -40,24 +42,37 @@ const ListEditPage = ({ user, setUser, match, history }) => {
     return Object.keys(_errors).length === 0;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
     if (list.id) {
-      listsApi.saveList(list).then(() => {
+      try {
+        await API.graphql(
+          graphqlOperation(updateList, {
+            input: {
+              id: list.id,
+              name: list.name,
+            },
+          })
+        );
         toast.success("List Saved.");
+        checkUser();
         history.push("/lists");
-      });
+      } catch (error) {
+        console.log(`error updated list:`);
+        console.log(error);
+      }
     } else {
-      listsApi.saveList(list).then((response) => {
-        const newUserState = { ...user };
-        newUserState.lists.push(response.id);
-        userApi.saveUser(newUserState).then((u) => {
-          setUser(u);
-          toast.success("Course Saved.");
-          history.push("/lists");
-        });
-      });
+      console.log(list);
+      try {
+        await API.graphql(graphqlOperation(createList, { input: list }));
+        toast.success("List Created!");
+        checkUser();
+        history.push("/lists");
+      } catch (error) {
+        console.log(`error creating list:`);
+        console.log(error);
+      }
     }
   }
 

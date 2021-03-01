@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "dailymsgreactapp6870a1d9_identitypool_6870a1d9",
+    "identityPoolName": "dailymsg69c97232_identitypool_69c97232",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "dailym6870a1d9",
-    "userPoolName": "dailymsgreactapp6870a1d9_userpool_6870a1d9",
+    "resourceNameTruncated": "dailym69c97232",
+    "userPoolName": "dailymsg69c97232_userpool_69c97232",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "dailym6870a1d9_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "dailym69c97232_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "6870a1d9",
-    "resourceName": "dailymsgreactapp6870a1d9",
+    "sharedId": "69c97232",
+    "resourceName": "dailymsg69c97232",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

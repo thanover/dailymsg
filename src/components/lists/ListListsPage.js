@@ -6,6 +6,8 @@ import ListItem from "./ListItem";
 function ListListsPage({ user }) {
   let history = useHistory();
   if (!user) history.push("/");
+  const lists = user.lists.items;
+  console.log(lists);
 
   return (
     <div>
@@ -18,15 +20,14 @@ function ListListsPage({ user }) {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Owner</th>
           </tr>
         </thead>
         <tbody>
           {user &&
-            user.lists.map((list) => {
+            user.lists.items.map((list) => {
               return (
-                <tr key={list}>
-                  <ListItem listId={list} />
+                <tr key={list.id}>
+                  <ListItem listId={list.id} />
                 </tr>
               );
             })}

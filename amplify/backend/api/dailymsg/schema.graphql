@@ -1,0 +1,26 @@
+schema {
+  query: Query
+}
+
+type User @model {
+  id: String!
+  email: String!
+  lists: [List] @connection(name: "UserLists")
+}
+
+type List @model {
+  id: ID!
+  name: String!
+  owner: User! @connection(name: "UserLists")
+  messages: [Message] @connection(name: "ListMessages")
+}
+
+type Message @model {
+  id: ID!
+  text: String!
+  list: List! @connection(name: "ListMessages")
+}
+
+type Query {
+  getUserLists(id: ID!): [List]
+}

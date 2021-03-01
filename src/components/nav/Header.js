@@ -45,8 +45,12 @@ function Header({ user, signOut }) {
           <li className="nav-item">
             {user && (
               <>
-                <div>{user.attributes.email}</div>
-                <button onClick={signOut}>Sign Out</button>
+                {user.attributes && (
+                  <>
+                    <div>{user.attributes.email}</div>
+                    <button onClick={signOut}>Sign Out</button>
+                  </>
+                )}
               </>
             )}
           </li>

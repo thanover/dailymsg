@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
-import * as listApi from "../../api/listsApi";
 import { Link } from "react-router-dom";
+import { API, graphqlOperation } from "aws-amplify";
+
+import { getList } from "../../graphql/queries";
 
 function ListItem({ listId }) {
   const [list, setList] = useState(null);
 
   useEffect(() => {
-    listApi.getListById(listId).then((list) => setList(list));
+    API.graphql(graphqlOperation(getList, { id: listId })).then((res) => {
+      setList(res.data.getList);
+    });
   }, [listId]);
+
+  useEffect(() => {
+    console.log(`List set:`);
+    console.log(list);
+  }, [list]);
 
   return (
     <>
@@ -17,7 +26,6 @@ function ListItem({ listId }) {
           <td>
             <Link to={"/list/" + list.id}>{list.name}</Link>
           </td>
-          <td>{list.ownerId}</td>
         </>
       )}
     </>
