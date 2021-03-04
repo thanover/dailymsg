@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import * as messageApi from "../../api/messagesApi";
 import { Link } from "react-router-dom";
+import { API, graphqlOperation } from "aws-amplify";
+import { getMessage } from "../../graphql/queries";
 
 function MessageItem({ messageId, list }) {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    messageApi.getMessageById(messageId).then((message) => setMessage(message));
+    API.graphql(graphqlOperation(getMessage, { id: messageId })).then((res) => {
+      setMessage(res.data.getMessage);
+    });
   }, [messageId]);
 
   return (
@@ -15,8 +18,8 @@ function MessageItem({ messageId, list }) {
       {message && (
         <>
           <td>
-            <Link to={"/message/" + message.list + "/" + message.id}>
-              {message.name}
+            <Link to={"/message/" + message.list.id + "/" + message.id}>
+              {message.text}
             </Link>
           </td>
           <td>{list.name}</td>

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import ListItem from "./ListItem";
 
-function ListListsPage({ user }) {
+function ListListsPage({ user, checkUser }) {
   let history = useHistory();
-  if (!user) history.push("/");
-  const lists = user.lists.items;
-  console.log(lists);
+  // checkUser().then(() => {
+  //   if (!user) history.push("/");
+  // });
 
   return (
     <div>

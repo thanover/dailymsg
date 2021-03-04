@@ -6,14 +6,14 @@ function MessageEditForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
       <TextInput
-        id="name"
-        label="Name"
+        id="text"
+        label="text"
         type="text"
-        name="name"
+        name="text"
         className="form-control"
-        value={props.message.name}
+        value={props.message.text}
         onChange={props.onChange}
-        error={props.errors.name}
+        error={props.errors.text}
       />
 
       <input type="submit" value="Save" className="btn btn-primary" />

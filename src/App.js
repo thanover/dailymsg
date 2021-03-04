@@ -70,7 +70,9 @@ function App() {
         <Route path="/" exact component={HomePage} />
         <Route
           path="/lists"
-          render={(props) => <ListListsPage {...props} user={user} />}
+          render={(props) => (
+            <ListListsPage {...props} user={user} checkUser={checkUser} />
+          )}
         />
         <Route
           path="/list/:id"

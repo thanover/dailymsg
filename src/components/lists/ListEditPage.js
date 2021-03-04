@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ListEditForm from "./ListEditForm";
 import { toast } from "react-toastify";
-// import * as listsApi from "../../api/listsApi";
-// import * as userApi from "../../api/userApi";
-import MessageList from "../messages/MessageList";
+import MessageList from "../messages/MessageListPage";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateList, createList } from "../../graphql/mutations";
 import { getList } from "../../graphql/queries";
@@ -16,6 +14,8 @@ const ListEditPage = ({ user, match, history, checkUser }) => {
     name: "",
     listOwnerId: user.id,
   });
+
+  // checkUser();
 
   useEffect(() => {
     if (id) {
@@ -56,18 +56,17 @@ const ListEditPage = ({ user, match, history, checkUser }) => {
           })
         );
         toast.success("List Saved.");
-        checkUser();
+        await checkUser();
         history.push("/lists");
       } catch (error) {
-        console.log(`error updated list:`);
+        console.log(`error updating list:`);
         console.log(error);
       }
     } else {
-      console.log(list);
       try {
         await API.graphql(graphqlOperation(createList, { input: list }));
         toast.success("List Created!");
-        checkUser();
+        await checkUser();
         history.push("/lists");
       } catch (error) {
         console.log(`error creating list:`);

@@ -1,14 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import MessageItem from "./MessageItem";
 
-function MessageList({ list, user, checkUser }) {
-  let history = useHistory();
-  checkUser().then(() => {
-    if (!user) history.push("/");
-  });
-
+function MessageList({ list }) {
   return (
     <>
       <Link className="btn btn-primary" to={`/message/${list.id}`}>
@@ -19,7 +13,7 @@ function MessageList({ list, user, checkUser }) {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>List</th>
+            <th>Name</th>
           </tr>
         </thead>
         <tbody>

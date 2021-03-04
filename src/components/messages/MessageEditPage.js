@@ -1,35 +1,44 @@
 import React, { useState, useEffect } from "react";
 import MessageEditForm from "./MessageEditForm";
 import { toast } from "react-toastify";
-import * as listsApi from "../../api/listsApi";
-import * as messageApi from "../../api/messagesApi";
+// import * as listsApi from "../../api/listsApi";
+// import * as messageApi from "../../api/messagesApi";
 
-const MessageEditPage = ({ match, history }) => {
+import { API, graphqlOperation } from "aws-amplify";
+import { getMessage } from "../../graphql/queries";
+import { updateMessage, createMessage } from "../../graphql/mutations";
+
+const MessageEditPage = ({ match, history, checkUser }) => {
   const messageId = match.params.id ? match.params.id : null;
   const listId = match.params.list ? match.params.list : null;
   const [errors, setErrors] = useState({});
-  const [list, setList] = useState({});
   const [message, setMessage] = useState({
     id: null,
-    name: "",
-    list: listId,
+    text: "",
+    messageListId: listId,
   });
+
+  console.log(message);
+
+  console.log(`/list/${listId}`);
 
   useEffect(() => {
     if (messageId) {
-      messageApi.getMessageById(messageId).then((_message) => {
-        setMessage(_message);
-      });
+      API.graphql(graphqlOperation(getMessage, { id: messageId })).then(
+        (res) => {
+          setMessage(res.data.getMessage);
+        }
+      );
     }
   }, [messageId]);
 
-  useEffect(() => {
-    if (listId) {
-      listsApi.getListById(listId).then((_list) => {
-        setList(_list);
-      });
-    }
-  }, [listId]);
+  // useEffect(() => {
+  //   if (listId) {
+  //     listsApi.getListById(listId).then((_list) => {
+  //       setList(_list);
+  //     });
+  //   }
+  // }, [listId]);
 
   function handleChange({ target }) {
     setMessage({
@@ -41,37 +50,49 @@ const MessageEditPage = ({ match, history }) => {
   function formIsValid() {
     const _errors = {};
 
-    if (!message.name) _errors.name = "Name is required";
+    if (!message.text) _errors.text = "text is required";
 
     setErrors(_errors);
 
     return Object.keys(_errors).length === 0;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
     if (message.id) {
-      messageApi.saveMessage(message).then(() => {
+      try {
+        await API.graphql(
+          graphqlOperation(updateMessage, {
+            input: {
+              id: message.id,
+              text: message.text,
+            },
+          })
+        );
         toast.success("Message Saved.");
-        history.push(`/list/${list.id}`);
-      });
+        history.push(`/list/${listId}`);
+      } catch (error) {
+        console.log(`error updating message:`);
+        console.log(error);
+      }
     } else {
-      messageApi.saveMessage(message).then((response) => {
-        const newListState = { ...list };
-        newListState.messages.push(response.id);
-        listsApi.saveList(newListState).then((list) => {
-          setList(list);
-          toast.success("List Saved.");
-          history.push(`/list/${list.id}`);
-        });
-      });
+      console.log(message);
+      try {
+        await API.graphql(graphqlOperation(createMessage, { input: message }));
+        toast.success("Message Creted!");
+        await checkUser();
+        history.push(`/list/${listId}`);
+      } catch (error) {
+        console.log("error creating message:");
+        console.log(error);
+      }
     }
   }
 
   return (
     <>
-      <h2>{message.name}</h2>
+      <h2>{message.text}</h2>
       <h2>Manage List</h2>
       <MessageEditForm
         errors={errors}
