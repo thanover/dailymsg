@@ -5,16 +5,15 @@ import { API, graphqlOperation } from "aws-amplify";
 import { createUser } from "../../graphql/mutations";
 import { getUser } from "../../graphql/queries";
 
-const initialFormState = {
-  username: "",
-  password: "",
-  authCode: "",
-  formType: "signIn",
-};
-
-function SignInPage({ user, setUser, cognitoUser, setCognitoUser }) {
+function SignInPage({ user, setUser, cognitoUser, setCognitoUser, formType }) {
+  const initialFormState = {
+    username: "",
+    password: "",
+    authCode: "",
+    formType: formType,
+  };
   const [formState, updateFormState] = useState(initialFormState);
-  const { formType } = formState;
+  // const { formType } = formState;
 
   let history = useHistory();
 

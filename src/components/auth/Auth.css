@@ -1,0 +1,31 @@
+.auth-form-container {
+  grid-column: span 3;
+  grid-row: 2/3;
+  place-self: center;
+  width: 400px;
+  border-radius: 5px;
+  border: 1px solid #a5a5a5;
+  background-color: #fafafa;
+  padding: 30px;
+  display: grid;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #a5a5a5;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 18;
+  margin-top: 5px;
+}
+
+.input-container {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn {
+  place-self: center;
+}

@@ -1,0 +1,36 @@
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.75px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 200px auto 200px;
+  grid-template-rows: 75px auto 50px;
+  height: 100vh;
+}
+
+p {
+  letter-spacing: 0.25px;
+  font-size: 18;
+}
+
+.btn {
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  background-color: #0a5dff;
+
+  border: 1px solid #0a5dff;
+  color: white;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.btn:hover {
+  background-color: #0a5dff;
+  border: 1px solid black;
+}

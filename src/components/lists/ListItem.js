@@ -4,7 +4,7 @@ import { API, graphqlOperation } from "aws-amplify";
 
 import { getList } from "../../graphql/queries";
 
-function ListItem({ listId }) {
+function ListItem({ listId, active }) {
   const [list, setList] = useState(null);
 
   useEffect(() => {
@@ -20,14 +20,13 @@ function ListItem({ listId }) {
 
   return (
     <>
-      <td>{listId}</td>
-      {list && (
-        <>
-          <td>
+      <div className={active ? "list-item active" : "list-item"}>
+        {list && (
+          <>
             <Link to={"/list/" + list.id}>{list.name}</Link>
-          </td>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </>
   );
 }

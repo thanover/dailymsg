@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Header from "./components/nav/Header";
-import HomePage from "./components/HomePage";
-import { Route, Switch } from "react-router-dom";
-import ListListsPage from "./components/lists/ListListsPage";
-import ListEditPage from "./components/lists/ListEditPage";
-import { Auth } from "aws-amplify";
-import SignInPage from "./components/auth/SignInPage";
-import { useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import MessageEditPage from "./components/messages/MessageEditPage";
+import { Auth } from "aws-amplify";
 import { API, graphqlOperation } from "aws-amplify";
 import { getUser } from "./graphql/queries";
+import { AuthActions } from "./components/auth/AuthActions";
+import Header from "./components/nav/Header";
+import LandingPage from "./components/landing/LandingPage";
+import ListListsPage from "./components/lists/ListListsPage";
+import ListEditPage from "./components/lists/ListEditPage";
+import AuthContainer from "./components/auth/AuthContainer";
+import MessageEditPage from "./components/messages/MessageEditPage";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,11 +63,11 @@ function App() {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="grid">
       <ToastContainer autoClose={3000} hideProgressBar />
       <Header user={cognitoUser} signOut={signOut} />
       <Switch>
-        <Route path="/" exact component={HomePage} />
+        <Route path="/" exact component={LandingPage} />
         <Route
           path="/lists"
           render={(props) => (
@@ -77,7 +77,7 @@ function App() {
         <Route
           path="/list/:id"
           render={(props) => (
-            <ListEditPage
+            <ListListsPage
               {...props}
               user={user}
               setUser={setUser}
@@ -121,16 +121,38 @@ function App() {
         <Route
           path="/signin"
           render={(props) => (
-            <SignInPage
+            <AuthContainer
               {...props}
-              user={user}
               setUser={setUser}
-              cognitoUser={cognitoUser}
               setCognitoUser={setCognitoUser}
+              authAction={AuthActions.signIn}
+            />
+          )}
+        />
+        <Route
+          path="/signup"
+          render={(props) => (
+            <AuthContainer
+              {...props}
+              setUser={setUser}
+              setCognitoUser={setCognitoUser}
+              authAction={AuthActions.signUp}
+            />
+          )}
+        />
+        <Route
+          path="/confirmemail"
+          render={(props) => (
+            <AuthContainer
+              {...props}
+              setUser={setUser}
+              setCognitoUser={setCognitoUser}
+              authAction={AuthActions.confirmEmail}
             />
           )}
         />
       </Switch>
+      {/* <Footer></Footer> */}
     </div>
   );
 }
