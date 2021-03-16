@@ -10,6 +10,9 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -29,6 +32,9 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -48,6 +54,9 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -63,6 +72,9 @@ export const onCreateList = /* GraphQL */ `
     onCreateList {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -91,6 +103,9 @@ export const onUpdateList = /* GraphQL */ `
     onUpdateList {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -119,6 +134,9 @@ export const onDeleteList = /* GraphQL */ `
     onDeleteList {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -150,6 +168,9 @@ export const onCreateMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -175,6 +196,9 @@ export const onUpdateMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -200,6 +224,9 @@ export const onDeleteMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email

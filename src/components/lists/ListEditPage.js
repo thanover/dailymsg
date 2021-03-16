@@ -1,29 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ListEditForm from "./ListEditForm";
 import { toast } from "react-toastify";
-import MessageList from "../messages/MessageListPage";
 import { API, graphqlOperation } from "aws-amplify";
-import { updateList, createList } from "../../graphql/mutations";
-import { getList } from "../../graphql/queries";
+import { createList } from "../../graphql/mutations";
 
-const ListEditPage = ({ user, match, history, checkUser }) => {
-  const id = match.params.id ? match.params.id : null;
+const ListEditPage = ({ user, history, checkUser, closeModal }) => {
   const [errors, setErrors] = useState({});
   const [list, setList] = useState({
     id: null,
     name: "",
     listOwnerId: user.id,
+    sendHour: "08:00",
+    isDisabled: false,
   });
-
-  // checkUser();
-
-  useEffect(() => {
-    if (id) {
-      API.graphql(graphqlOperation(getList, { id: id })).then((res) => {
-        setList(res.data.getList);
-      });
-    }
-  }, [id]);
 
   function handleChange({ target }) {
     setList({
@@ -45,51 +34,28 @@ const ListEditPage = ({ user, match, history, checkUser }) => {
   async function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-    if (list.id) {
-      try {
-        await API.graphql(
-          graphqlOperation(updateList, {
-            input: {
-              id: list.id,
-              name: list.name,
-            },
-          })
-        );
-        toast.success("List Saved.");
-        await checkUser();
-        history.push("/lists");
-      } catch (error) {
-        console.log(`error updating list:`);
-        console.log(error);
-      }
-    } else {
-      try {
-        await API.graphql(graphqlOperation(createList, { input: list }));
-        toast.success("List Created!");
-        await checkUser();
-        history.push("/lists");
-      } catch (error) {
-        console.log(`error creating list:`);
-        console.log(error);
-      }
+    try {
+      await API.graphql(graphqlOperation(createList, { input: list }));
+      closeModal();
+      toast.success("List Created!");
+      await checkUser();
+      history.push("/lists");
+    } catch (error) {
+      console.log(`error creating list:`);
+      console.log(error);
     }
   }
 
   return (
-    <>
-      <h2>{list.name}</h2>
-      <h2>Manage Course</h2>
+    <div className="new-list-form">
       <ListEditForm
         errors={errors}
         list={list}
         onChange={handleChange}
         onSubmit={handleSubmit}
+        closeModal={closeModal}
       />
-      <br></br>
-      <br></br>
-      <h2>Messages</h2>
-      <MessageList list={list} user={user} />
-    </>
+    </div>
   );
 };
 

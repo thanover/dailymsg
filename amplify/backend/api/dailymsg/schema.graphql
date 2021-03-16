@@ -11,6 +11,9 @@ type User @model {
 type List @model {
   id: ID!
   name: String!
+  description: String
+  sendHour: String!
+  isDisabled: Boolean!
   owner: User! @connection(name: "UserLists")
   messages: [Message] @connection(name: "ListMessages")
 }

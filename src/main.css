@@ -7,7 +7,7 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: 200px auto 200px;
+  grid-template-columns: 400px auto 200px;
   grid-template-rows: 75px auto 50px;
   height: 100vh;
 }
@@ -17,13 +17,21 @@ p {
   font-size: 18;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+
 .btn {
   border-radius: 5px;
   padding: 10px 20px;
   border: none;
   text-decoration: none;
   background-color: #0a5dff;
-
   border: 1px solid #0a5dff;
   color: white;
   font-weight: bold;
@@ -33,4 +41,13 @@ p {
 .btn:hover {
   background-color: #0a5dff;
   border: 1px solid black;
+}
+
+.btn span {
+  color: white;
+}
+
+button {
+  border: none;
+  background: none;
 }

@@ -7,7 +7,7 @@ function ListEditForm(props) {
     <form onSubmit={props.onSubmit}>
       <TextInput
         id="name"
-        label="Name"
+        label="Enter a name:"
         type="text"
         name="name"
         className="form-control"
@@ -16,7 +16,9 @@ function ListEditForm(props) {
         error={props.errors.name}
       />
 
-      <input type="submit" value="Save" className="btn btn-primary" />
+      <button type="submit" className="btn create-list-btn">
+        Create List
+      </button>
     </form>
   );
 }

@@ -10,7 +10,7 @@
   display: grid;
 }
 
-input {
+.auth-form-container input {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #a5a5a5;
@@ -26,6 +26,6 @@ input {
   font-weight: bold;
 }
 
-.btn {
+.auth-form-container .btn {
   place-self: center;
 }

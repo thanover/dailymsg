@@ -9,7 +9,7 @@ function Header({ user, signOut }) {
   return (
     <div className="header">
       <div className="logo">
-        <NavLink className="logo-link" to="/" exact>
+        <NavLink className="logo-link" to={user ? "/lists" : "/"} exact>
           <img src={logo} alt="logo" />
         </NavLink>
       </div>

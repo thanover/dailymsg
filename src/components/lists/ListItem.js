@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-
 import { getList } from "../../graphql/queries";
 
 function ListItem({ listId, active }) {
@@ -13,20 +12,18 @@ function ListItem({ listId, active }) {
     });
   }, [listId]);
 
-  useEffect(() => {
-    console.log(`List set:`);
-    console.log(list);
-  }, [list]);
+  useEffect(() => {}, [list]);
 
   return (
     <>
-      <div className={active ? "list-item active" : "list-item"}>
-        {list && (
-          <>
-            <Link to={"/list/" + list.id}>{list.name}</Link>
-          </>
-        )}
-      </div>
+      {list && (
+        <Link to={"/lists/" + list.id}>
+          <li className={active ? "list-item active" : "list-item"}>
+            <i className="far fa-list-alt"></i>
+            {" " + list.name}
+          </li>
+        </Link>
+      )}
     </>
   );
 }

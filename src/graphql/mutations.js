@@ -13,6 +13,9 @@ export const createUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -35,6 +38,9 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -57,6 +63,9 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -75,6 +84,9 @@ export const createList = /* GraphQL */ `
     createList(input: $input, condition: $condition) {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -106,6 +118,9 @@ export const updateList = /* GraphQL */ `
     updateList(input: $input, condition: $condition) {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -137,6 +152,9 @@ export const deleteList = /* GraphQL */ `
     deleteList(input: $input, condition: $condition) {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -171,6 +189,9 @@ export const createMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -199,6 +220,9 @@ export const updateMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -227,6 +251,9 @@ export const deleteMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email

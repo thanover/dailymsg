@@ -1,6 +1,6 @@
 import React from "react";
 import "./LandingPage.css";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
   return (
@@ -12,12 +12,10 @@ function LandingPage() {
           sent to your inbox every day
         </p>
         <div className="landing-btn-container">
-          <NavLink className="btn landing-btn" to="/signup">
-            Get Started
-          </NavLink>
+          <Link className="btn landing-btn" to="/signup">
+            <span>Get Started</span>
+          </Link>
         </div>
-
-        {/* <button className="btn landing-btn">Get Started</button> */}
       </div>
     </div>
   );

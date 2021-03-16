@@ -10,12 +10,7 @@ function SignUpForm({ onChange, signUp }) {
 
       <div className="input-container">
         <label>Password</label>
-        <input
-          name="password"
-          type="password"
-          onChange={onChange}
-          placeholder="password"
-        />
+        <input name="password" type="password" onChange={onChange} />
       </div>
 
       <button className="btn" onClick={signUp}>

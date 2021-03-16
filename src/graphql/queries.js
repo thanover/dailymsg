@@ -6,6 +6,9 @@ export const getUserLists = /* GraphQL */ `
     getUserLists(id: $id) {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -38,6 +41,9 @@ export const getUser = /* GraphQL */ `
         items {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }
@@ -73,6 +79,9 @@ export const getList = /* GraphQL */ `
     getList(id: $id) {
       id
       name
+      description
+      sendHour
+      isDisabled
       owner {
         id
         email
@@ -106,6 +115,9 @@ export const listLists = /* GraphQL */ `
       items {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -130,6 +142,9 @@ export const getMessage = /* GraphQL */ `
       list {
         id
         name
+        description
+        sendHour
+        isDisabled
         owner {
           id
           email
@@ -160,6 +175,9 @@ export const listMessages = /* GraphQL */ `
         list {
           id
           name
+          description
+          sendHour
+          isDisabled
           createdAt
           updatedAt
         }

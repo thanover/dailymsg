@@ -117,52 +117,62 @@ function AuthContainer({ setUser, setCognitoUser, authAction }) {
     }
   }
 
-  return (
-    <>
-      <div className="auth-form-container">
-        {_authAction === AuthActions.signIn && (
+  // return (
+  //   <>
+  //     <div className="auth-form-container">
+  //       {_authAction === AuthActions.signIn && (
+  //         <SignInForm onChange={onChange} signIn={signIn} />
+  //       )}
+  //       {_authAction === AuthActions.signUp && (
+  //         <SignUpForm signUp={signUp} onChange={onChange} />
+  //       )}
+  //       {_authAction === AuthActions.confirmEmail && (
+  //         <ConfirmEmailForm
+  //           confirmEmail={confirmEmail}
+  //           onChange={onChange}
+  //           resendConfirmationCode={resendConfirmationCode}
+  //         />
+  //       )}
+  //       {_authAction === AuthActions.resetPassword && (
+  //         <ResetPasswordPage onChange={onChange} />
+  //       )}
+  //     </div>
+  //   </>
+  // );
+
+  switch (_authAction) {
+    case AuthActions.signIn:
+      console.log("signIn switch");
+      return (
+        <div className="auth-form-container">
           <SignInForm onChange={onChange} signIn={signIn} />
-        )}
-        {_authAction === AuthActions.signUp && (
+        </div>
+      );
+    case AuthActions.signUp:
+      return (
+        <div className="auth-form-container">
           <SignUpForm signUp={signUp} onChange={onChange} />
-        )}
-        {_authAction === AuthActions.confirmEmail && (
+        </div>
+      );
+    case AuthActions.confirmEmail:
+      return (
+        <div className="auth-form-container">
           <ConfirmEmailForm
             confirmEmail={confirmEmail}
             onChange={onChange}
             resendConfirmationCode={resendConfirmationCode}
           />
-        )}
-        {_authAction === AuthActions.resetPassword && (
+        </div>
+      );
+    case AuthActions.resetPassword:
+      return (
+        <div className="auth-form-container">
           <ResetPasswordPage onChange={onChange} />
-        )}
-      </div>
-    </>
-  );
-
-  // switch (_authAction) {
-  //   case AuthActions.signIn:
-  //     console.log("signIn switch");
-  //     return (
-  //       <>
-  //         <SignInPage onChange={onChange} signIn={signIn} />
-  //       </>
-  //     );
-  //   case AuthActions.signUp:
-  //     return <SignUpPage signUp={signUp} onChange={onChange} />;
-  //   case AuthActions.confirmEmail:
-  //     return (
-  //       <ConfirmEmailPage
-  //         confirmEmail={confirmEmail}
-  //         onChange={onChange}
-  //         resendConfirmationCode={resendConfirmationCode}
-  //       />
-  //     );
-  //   case AuthActions.resetPassword:
-  //     return <ResetPasswordPage onChange={onChange} />;
-  //   default:
-  //     history.push("/");
-  // }
+        </div>
+      );
+    default:
+      history.push("/");
+  }
 }
 
 export default AuthContainer;

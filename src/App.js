@@ -5,13 +5,16 @@ import { Auth } from "aws-amplify";
 import { API, graphqlOperation } from "aws-amplify";
 import { getUser } from "./graphql/queries";
 import { AuthActions } from "./components/auth/AuthActions";
+import Modal from "react-modal";
 import Header from "./components/nav/Header";
 import LandingPage from "./components/landing/LandingPage";
-import ListListsPage from "./components/lists/ListListsPage";
+import ListPage from "./components/lists/ListPage";
 import ListEditPage from "./components/lists/ListEditPage";
 import AuthContainer from "./components/auth/AuthContainer";
 import MessageEditPage from "./components/messages/MessageEditPage";
 import "react-toastify/dist/ReactToastify.css";
+
+Modal.setAppElement("#root");
 
 function App() {
   const [user, setUser] = useState(null);
@@ -69,31 +72,20 @@ function App() {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route
+          path="/lists/:id"
+          render={(props) => (
+            <ListPage
+              {...props}
+              user={user}
+              setUser={setUser}
+              checkUser={checkUser}
+            />
+          )}
+        />
+        <Route
           path="/lists"
           render={(props) => (
-            <ListListsPage {...props} user={user} checkUser={checkUser} />
-          )}
-        />
-        <Route
-          path="/list/:id"
-          render={(props) => (
-            <ListListsPage
-              {...props}
-              user={user}
-              setUser={setUser}
-              checkUser={checkUser}
-            />
-          )}
-        />
-        <Route
-          path="/list/"
-          render={(props) => (
-            <ListEditPage
-              {...props}
-              user={user}
-              setUser={setUser}
-              checkUser={checkUser}
-            />
+            <ListPage {...props} user={user} checkUser={checkUser} />
           )}
         />
         <Route
