@@ -6,11 +6,10 @@
 }
 
 .logo {
-  grid-column: 1/2;
-  justify-self: center;
   align-self: center;
   font-size: 36px;
   font-weight: bold;
+  margin-left: 0.5em;
 }
 
 .logo-link {
@@ -18,14 +17,14 @@
   color: black;
 }
 
-.nav {
+/* .nav {
   grid-column: 3/4;
   justify-self: center;
   align-self: center;
   font-size: 18px;
   font-weight: bold;
   padding-bottom: 10px;
-}
+} */
 
 .nav-link {
   text-decoration: none;
@@ -38,4 +37,48 @@
 
 .nav-link:visited {
   color: black;
+}
+
+.icon-button {
+  color: black;
+}
+
+.nav {
+  grid-column: -1;
+}
+
+.nav-item {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dropdown {
+  position: absolute;
+  top: 2em;
+  width: 6em;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  padding: 1rem;
+  overflow: hidden;
+  transition: height var(--speed) ease;
+}
+
+.menu {
+  width: 100%;
+}
+
+.menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  transition: background var(--speed);
+  padding: 0.5rem;
+}
+
+.menu-item .icon-button {
+  margin-right: 0.5rem;
+}
+
+.icon-right {
+  margin-left: auto;
 }

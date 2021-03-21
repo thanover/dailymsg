@@ -34,7 +34,7 @@ function NewListModal({ user, checkUser }) {
 
   return (
     <>
-      <button className="list-btn" onClick={openModal}>
+      <button className="new-list-btn" onClick={openModal}>
         + Add a New List
       </button>
       <Modal

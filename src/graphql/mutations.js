@@ -100,6 +100,10 @@ export const createList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -134,6 +138,10 @@ export const updateList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -168,6 +176,10 @@ export const deleteList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -186,6 +198,10 @@ export const createMessage = /* GraphQL */ `
     createMessage(input: $input, condition: $condition) {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name
@@ -217,6 +233,10 @@ export const updateMessage = /* GraphQL */ `
     updateMessage(input: $input, condition: $condition) {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name
@@ -248,6 +268,10 @@ export const deleteMessage = /* GraphQL */ `
     deleteMessage(input: $input, condition: $condition) {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name

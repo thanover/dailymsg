@@ -1,36 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MessageEditForm from "./MessageEditForm";
 import { toast } from "react-toastify";
-// import * as listsApi from "../../api/listsApi";
-// import * as messageApi from "../../api/messagesApi";
 
 import { API, graphqlOperation } from "aws-amplify";
-import { getMessage } from "../../graphql/queries";
-import { updateMessage, createMessage } from "../../graphql/mutations";
+import { createMessage } from "../../graphql/mutations";
 
-const MessageEditPage = ({ match, history, checkUser }) => {
-  const messageId = match.params.id ? match.params.id : null;
-  const listId = match.params.list ? match.params.list : null;
+const MessageEditPage = ({ list, history, closeModal, updateList }) => {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState({
     id: null,
     text: "",
-    messageListId: listId,
+    messageListId: list.id,
   });
-
-  console.log(message);
-
-  console.log(`/list/${listId}`);
-
-  useEffect(() => {
-    if (messageId) {
-      API.graphql(graphqlOperation(getMessage, { id: messageId })).then(
-        (res) => {
-          setMessage(res.data.getMessage);
-        }
-      );
-    }
-  }, [messageId]);
 
   // useEffect(() => {
   //   if (listId) {
@@ -60,47 +41,27 @@ const MessageEditPage = ({ match, history, checkUser }) => {
   async function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-    if (message.id) {
-      try {
-        await API.graphql(
-          graphqlOperation(updateMessage, {
-            input: {
-              id: message.id,
-              text: message.text,
-            },
-          })
-        );
-        toast.success("Message Saved.");
-        history.push(`/list/${listId}`);
-      } catch (error) {
-        console.log(`error updating message:`);
-        console.log(error);
-      }
-    } else {
-      console.log(message);
-      try {
-        await API.graphql(graphqlOperation(createMessage, { input: message }));
-        toast.success("Message Creted!");
-        await checkUser();
-        history.push(`/list/${listId}`);
-      } catch (error) {
-        console.log("error creating message:");
-        console.log(error);
-      }
+    try {
+      await API.graphql(graphqlOperation(createMessage, { input: message }));
+      closeModal();
+      updateList();
+      toast.success("Message Created!");
+      history.push(`/lists/${list.id}`);
+    } catch (error) {
+      console.log("error creating message:");
+      console.log(error);
     }
   }
 
   return (
-    <>
-      <h2>{message.text}</h2>
-      <h2>Manage List</h2>
+    <div className="new-list-form">
       <MessageEditForm
         errors={errors}
         message={message}
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-    </>
+    </div>
   );
 };
 

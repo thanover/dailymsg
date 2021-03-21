@@ -9,7 +9,6 @@ import Modal from "react-modal";
 import Header from "./components/nav/Header";
 import LandingPage from "./components/landing/LandingPage";
 import ListPage from "./components/lists/ListPage";
-import ListEditPage from "./components/lists/ListEditPage";
 import AuthContainer from "./components/auth/AuthContainer";
 import MessageEditPage from "./components/messages/MessageEditPage";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,6 +47,8 @@ function App() {
         } catch (error) {
           console.log(error);
         }
+      } else {
+        history.push("./");
       }
     } catch (err) {
       console.log("user error:", err);
@@ -72,7 +73,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route
-          path="/lists/:id"
+          path="/lists/:listid"
           render={(props) => (
             <ListPage
               {...props}

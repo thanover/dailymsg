@@ -88,6 +88,10 @@ export const onCreateList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -119,6 +123,10 @@ export const onUpdateList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -150,6 +158,10 @@ export const onDeleteList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -165,6 +177,10 @@ export const onCreateMessage = /* GraphQL */ `
     onCreateMessage {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name
@@ -193,6 +209,10 @@ export const onUpdateMessage = /* GraphQL */ `
     onUpdateMessage {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name
@@ -221,6 +241,10 @@ export const onDeleteMessage = /* GraphQL */ `
     onDeleteMessage {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import MessageEditPage from "./MessageListPage";
+import MessageEditPage from "./MessageEditPage";
 
 const customStyles = {
   content: {
@@ -16,7 +16,7 @@ const customStyles = {
   },
 };
 
-function NewMessageModal({ user, checkUser }) {
+function NewMessageModal({ list, checkUser, updateList }) {
   const [newMessageModalIsOpen, setNewMessageModalIsOpen] = useState(false);
 
   function openModal() {
@@ -45,9 +45,10 @@ function NewMessageModal({ user, checkUser }) {
         contentLabel="Example Modal"
       >
         <MessageEditPage
-          user={user}
-          checkUser={checkUser}
+          list={list}
           closeModal={closeModal}
+          checkUser={checkUser}
+          updateList={updateList}
         />
       </Modal>
     </>

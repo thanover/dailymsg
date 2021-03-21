@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 import { getMessage } from "../../graphql/queries";
 
-function MessageItem({ messageId, list }) {
+function MessageItem({ messageId, index }) {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
@@ -13,19 +13,21 @@ function MessageItem({ messageId, list }) {
   }, [messageId]);
 
   return (
-    <>
-      <td>{messageId}</td>
+    <div className="message-item">
       {message && (
         <>
-          <td>
-            <Link to={"/message/" + message.list.id + "/" + message.id}>
-              {message.text}
-            </Link>
-          </td>
-          <td>{list.name}</td>
+          <div className="message-edit"></div>
+          <div className="message-text">{message.text}</div>
+          <div className="message-send-data">
+            Last Sent 30 day(s) ago - Sending in {index} day(s)
+          </div>
+          <div className="message-author-source">
+            <div className="message-authour"></div>
+            <div className="message-source"></div>
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 

@@ -21,6 +21,10 @@ type List @model {
 type Message @model {
   id: ID!
   text: String!
+  author: String
+  source: String
+  nextSendDate: AWSDate
+  lastSentDate: AWSDate
   list: List! @connection(name: "ListMessages")
 }
 

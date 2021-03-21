@@ -22,6 +22,10 @@ export const getUserLists = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -95,6 +99,10 @@ export const getList = /* GraphQL */ `
         items {
           id
           text
+          author
+          source
+          nextSendDate
+          lastSentDate
           createdAt
           updatedAt
         }
@@ -139,6 +147,10 @@ export const getMessage = /* GraphQL */ `
     getMessage(id: $id) {
       id
       text
+      author
+      source
+      nextSendDate
+      lastSentDate
       list {
         id
         name
@@ -172,6 +184,10 @@ export const listMessages = /* GraphQL */ `
       items {
         id
         text
+        author
+        source
+        nextSendDate
+        lastSentDate
         list {
           id
           name
