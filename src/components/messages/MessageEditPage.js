@@ -5,21 +5,13 @@ import { toast } from "react-toastify";
 import { API, graphqlOperation } from "aws-amplify";
 import { createMessage } from "../../graphql/mutations";
 
-const MessageEditPage = ({ list, history, closeModal, updateList }) => {
+const MessageEditPage = ({ list, closeModal, updateList }) => {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState({
     id: null,
     text: "",
     messageListId: list.id,
   });
-
-  // useEffect(() => {
-  //   if (listId) {
-  //     listsApi.getListById(listId).then((_list) => {
-  //       setList(_list);
-  //     });
-  //   }
-  // }, [listId]);
 
   function handleChange({ target }) {
     setMessage({
@@ -43,10 +35,9 @@ const MessageEditPage = ({ list, history, closeModal, updateList }) => {
     if (!formIsValid()) return;
     try {
       await API.graphql(graphqlOperation(createMessage, { input: message }));
+      await updateList();
       closeModal();
-      updateList();
       toast.success("Message Created!");
-      history.push(`/lists/${list.id}`);
     } catch (error) {
       console.log("error creating message:");
       console.log(error);

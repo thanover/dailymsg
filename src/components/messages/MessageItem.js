@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { getMessage } from "../../graphql/queries";
+import { deleteMessage as gqlDeleteMessage } from "../../graphql/mutations";
+import { toast } from "react-toastify";
 
-function MessageItem({ messageId, index }) {
-  const [message, setMessage] = useState(null);
-
-  useEffect(() => {
-    API.graphql(graphqlOperation(getMessage, { id: messageId })).then((res) => {
-      setMessage(res.data.getMessage);
-    });
-  }, [messageId]);
+function MessageItem({ message, index, updateList }) {
+  async function deleteMessage() {
+    try {
+      API.graphql(
+        graphqlOperation(gqlDeleteMessage, { input: { id: message.id } })
+      ).then((res) => {
+        toast.info("Message Deleted");
+        updateList();
+      });
+    } catch (err) {
+      console.log("error deleting the message:");
+      console.log(err);
+    }
+  }
 
   return (
     <div className="message-item">
@@ -25,6 +31,10 @@ function MessageItem({ messageId, index }) {
             <div className="message-authour"></div>
             <div className="message-source"></div>
           </div>
+          <button className="delete-list-btn" onClick={deleteMessage}>
+            <i className="far fa-trash-alt"></i>
+            {" Delete Message"}
+          </button>
         </>
       )}
     </div>

@@ -23,13 +23,9 @@ function App() {
     checkUser();
   }, []);
 
-  useEffect(() => {
-    console.log(cognitoUser);
-  }, [cognitoUser]);
+  useEffect(() => {}, [cognitoUser]);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   let history = useHistory();
 

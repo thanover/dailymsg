@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import ListEditForm from "./ListEditForm";
 import { toast } from "react-toastify";
 import { API, graphqlOperation } from "aws-amplify";
 import { createList } from "../../graphql/mutations";
 
-const ListEditPage = ({ user, history, checkUser, closeModal }) => {
+const ListEditPage = ({ user, checkUser, closeModal }) => {
   const [errors, setErrors] = useState({});
+  const history = useHistory();
   const [list, setList] = useState({
     id: null,
     name: "",
@@ -35,11 +37,15 @@ const ListEditPage = ({ user, history, checkUser, closeModal }) => {
     event.preventDefault();
     if (!formIsValid()) return;
     try {
-      await API.graphql(graphqlOperation(createList, { input: list }));
+      const response = await API.graphql(
+        graphqlOperation(createList, { input: list })
+      );
+      console.log(response);
+      const newListId = response.data.createList.id;
       closeModal();
       toast.success("List Created!");
       await checkUser();
-      history.push("/lists");
+      history.push(`/lists/${newListId}`);
     } catch (error) {
       console.log(`error creating list:`);
       console.log(error);

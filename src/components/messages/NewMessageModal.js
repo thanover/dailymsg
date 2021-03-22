@@ -16,7 +16,7 @@ const customStyles = {
   },
 };
 
-function NewMessageModal({ list, checkUser, updateList }) {
+function NewMessageModal({ list, checkUser, updateList, setActiveList }) {
   const [newMessageModalIsOpen, setNewMessageModalIsOpen] = useState(false);
 
   function openModal() {
@@ -49,6 +49,7 @@ function NewMessageModal({ list, checkUser, updateList }) {
           closeModal={closeModal}
           checkUser={checkUser}
           updateList={updateList}
+          setActiveList={setActiveList}
         />
       </Modal>
     </>

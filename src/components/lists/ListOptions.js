@@ -1,6 +1,6 @@
 import React from "react";
 
-function ListOptions({ sendHour, isDisabled }) {
+function ListOptions({ sendHour, isDisabled, deleteList }) {
   return (
     <>
       <label htmlFor="send-hour">Send Hour:</label>
@@ -18,6 +18,10 @@ function ListOptions({ sendHour, isDisabled }) {
         <option value="08:00">08:00</option>
       </select>
       <p className="isDisabled">{isDisabled ? "Disabled" : "Active"}</p>
+      <button className="delete-list-btn" onClick={deleteList}>
+        <i className="far fa-trash-alt"></i>
+        {" Delete List"}
+      </button>
     </>
   );
 }
