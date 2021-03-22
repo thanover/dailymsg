@@ -31,8 +31,13 @@ function App() {
 
   async function checkUser() {
     try {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      setCognitoUser(cognitoUser);
+      await Auth.currentAuthenticatedUser()
+        .then((cognitoUser) => {
+          setCognitoUser(cognitoUser);
+        })
+        .catch(() => {
+          setCognitoUser(null);
+        });
       if (cognitoUser) {
         try {
           API.graphql(

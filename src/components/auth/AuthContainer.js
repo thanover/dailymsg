@@ -19,8 +19,6 @@ function AuthContainer({ setUser, setCognitoUser, authAction }) {
     authCode: "",
   });
   let [_authAction, _setAuthAction] = useState(authAction);
-  console.log(authAction);
-  console.log(_authAction);
 
   useEffect(() => {
     _setAuthAction(authAction);
@@ -117,32 +115,8 @@ function AuthContainer({ setUser, setCognitoUser, authAction }) {
     }
   }
 
-  // return (
-  //   <>
-  //     <div className="auth-form-container">
-  //       {_authAction === AuthActions.signIn && (
-  //         <SignInForm onChange={onChange} signIn={signIn} />
-  //       )}
-  //       {_authAction === AuthActions.signUp && (
-  //         <SignUpForm signUp={signUp} onChange={onChange} />
-  //       )}
-  //       {_authAction === AuthActions.confirmEmail && (
-  //         <ConfirmEmailForm
-  //           confirmEmail={confirmEmail}
-  //           onChange={onChange}
-  //           resendConfirmationCode={resendConfirmationCode}
-  //         />
-  //       )}
-  //       {_authAction === AuthActions.resetPassword && (
-  //         <ResetPasswordPage onChange={onChange} />
-  //       )}
-  //     </div>
-  //   </>
-  // );
-
   switch (_authAction) {
     case AuthActions.signIn:
-      console.log("signIn switch");
       return (
         <div className="auth-form-container">
           <SignInForm onChange={onChange} signIn={signIn} />

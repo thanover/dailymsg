@@ -2,13 +2,11 @@
   grid-row: 1/2;
   grid-column: span 3;
   display: grid;
-  grid-template-columns: 200px auto 200px;
+  grid-template-columns: 100px auto 100px;
 }
 
 .logo {
-  align-self: center;
-  font-size: 36px;
-  font-weight: bold;
+  grid-column: 1/2;
   margin-left: 0.5em;
 }
 
@@ -16,15 +14,6 @@
   text-decoration: none;
   color: black;
 }
-
-/* .nav {
-  grid-column: 3/4;
-  justify-self: center;
-  align-self: center;
-  font-size: 18px;
-  font-weight: bold;
-  padding-bottom: 10px;
-} */
 
 .nav-link {
   text-decoration: none;
@@ -39,46 +28,49 @@
   color: black;
 }
 
-.icon-button {
+.nav-item-btn {
   color: black;
+  padding: 0px;
+  margin-left: 50px;
+  width: 50px;
+  font-size: 1.5em;
 }
 
-.nav {
-  grid-column: -1;
-}
-
-.nav-item {
+.nav-items {
+  grid-column: 3/4;
   display: flex;
-  justify-content: flex-end;
 }
 
 .dropdown {
   position: absolute;
-  top: 2em;
+  top: 76px;
   width: 6em;
   border: 1px solid #cbcbcb;
   border-radius: 5px;
-  padding: 1rem;
   overflow: hidden;
-  transition: height var(--speed) ease;
+  transition: height 1000ms ease;
 }
 
-.menu {
-  width: 100%;
-}
-
-.menu-item {
+.drop-down-menu-item {
   height: 50px;
-  display: flex;
-  align-items: center;
-  transition: background var(--speed);
   padding: 0.5rem;
+  cursor: pointer;
 }
 
-.menu-item .icon-button {
+.drop-down-menu-item .icon-button {
   margin-right: 0.5rem;
 }
 
 .icon-right {
   margin-left: auto;
+}
+
+.icon-button {
+  padding: 3em;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
