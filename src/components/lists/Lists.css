@@ -110,7 +110,5 @@ h1 {
 }
 
 .delete-list-btn {
-  background-color: rgb(176, 48, 48);
-  color: white;
-  border: solid 1px black;
+  color: rgb(176, 48, 48);
 }

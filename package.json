@@ -8,9 +8,10 @@
     "@testing-library/user-event": "^12.7.1",
     "aws-amplify": "^3.3.18",
     "bootstrap": "^4.6.0",
-    "flux": "^4.0.1",
     "immutable": "^4.0.0-rc.12",
+    "node-sass": "^5.0.0",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.1",
     "react-modal": "^3.12.1",
     "react-router-dom": "^5.2.0",
@@ -23,12 +24,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -42,5 +55,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.2.2",
+    "@storybook/addon-essentials": "^6.2.2",
+    "@storybook/addon-links": "^6.2.2",
+    "@storybook/node-logger": "^6.2.2",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.2"
   }
 }

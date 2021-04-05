@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import ListsList from "./ListsList";
@@ -17,18 +17,18 @@ import {
   deleteMessage as gqlDeleteMessage,
 } from "../../graphql/mutations";
 
-function ListPage2({ user, checkUser }) {
+function ListPage({ user, checkUser }) {
   const [lists, setLists] = useState(null);
 
   const { listid: activeListId } = useParams();
   const [activeList, setActiveList] = useState(null);
   const [messages, setMessages] = useState(null);
   const history = useHistory();
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    if (user) {
-      setLists(user.lists.items);
-    }
+    if (!user) history.push("/");
+    if (user) setLists(user.lists.items);
   }, [user]);
 
   useEffect(() => {
@@ -39,10 +39,17 @@ function ListPage2({ user, checkUser }) {
     }
   }, [activeListId]);
 
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   async function updateList() {
     try {
       API.graphql(graphqlOperation(getList, { id: activeListId })).then(
         (res) => {
+          if (!mountedRef.current) return null;
           const _activeList = res.data.getList;
           setActiveList(_activeList);
           setMessages(_activeList.messages.items);
@@ -149,4 +156,4 @@ function ListPage2({ user, checkUser }) {
   );
 }
 
-export default ListPage2;
+export default ListPage;

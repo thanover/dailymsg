@@ -19,15 +19,17 @@ function App() {
   const [user, setUser] = useState(null);
   const [cognitoUser, setCognitoUser] = useState(null);
 
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  useEffect(() => {}, [cognitoUser]);
-
-  useEffect(() => {}, [user]);
-
   let history = useHistory();
+
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then((cognitoUser) => {
+        setCognitoUser(cognitoUser);
+      })
+      .catch(() => {
+        setCognitoUser(null);
+      });
+  }, []);
 
   async function checkUser() {
     try {
@@ -39,6 +41,7 @@ function App() {
           setCognitoUser(null);
         });
       if (cognitoUser) {
+        console.log("getting user...");
         try {
           API.graphql(
             graphqlOperation(getUser, { id: cognitoUser.username })
@@ -56,6 +59,23 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    console.log(cognitoUser);
+    console.log(`user:`);
+    console.log(user);
+    if (!user && cognitoUser) {
+      try {
+        API.graphql(
+          graphqlOperation(getUser, { id: cognitoUser.username })
+        ).then((_user) => {
+          setUser(_user.data.getUser);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [cognitoUser, user]);
+
   async function signOut() {
     try {
       Auth.signOut();
@@ -70,7 +90,7 @@ function App() {
   return (
     <div className="grid">
       <ToastContainer autoClose={3000} hideProgressBar />
-      <Header user={cognitoUser} signOut={signOut} />
+      <Header user={user} signOut={signOut} />
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route

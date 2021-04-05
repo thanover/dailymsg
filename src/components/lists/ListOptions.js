@@ -1,4 +1,9 @@
 import React from "react";
+import DropDownMenu2 from "../common/DropDownMenu2";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Link from "@material-ui/core/Link";
+import DeleteIcon from "@material-ui/icons/Delete";
+import DropDown from "../dropdown/DropDown";
 
 function ListOptions({ sendHour, isDisabled, deleteList }) {
   return (
@@ -18,10 +23,14 @@ function ListOptions({ sendHour, isDisabled, deleteList }) {
         <option value="08:00">08:00</option>
       </select>
       <p className="isDisabled">{isDisabled ? "Disabled" : "Active"}</p>
-      <button className="delete-list-btn" onClick={deleteList}>
-        <i className="far fa-trash-alt"></i>
-        {" Delete List"}
-      </button>
+      <DropDown
+        icon={<MoreVertIcon />}
+        menuOptions={[
+          <Link onClick={deleteList}>
+            <DeleteIcon />
+          </Link>,
+        ]}
+      ></DropDown>
     </>
   );
 }

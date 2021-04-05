@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/dailyMsg_Logo.png";
-import NavItem from "./NavItem";
-import DropDownMenuItem from "./DropDownMenuItem";
+import DropDownMenuItem from "../common/DropDownMenuItem";
+import DropDownMenu from "../common/DropDownMenu";
 
 function Header({ user, signOut }) {
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <div className="header">
@@ -23,18 +25,17 @@ function Header({ user, signOut }) {
           </NavLink>
         )}
         {user && (
-          <NavItem>
-            <div className="dropdown">
-              <ul>
-                <li>
-                  <DropDownMenuItem>My Profile</DropDownMenuItem>
-                </li>
-                <li>
-                  <DropDownMenuItem onClick={signOut}>Log Out</DropDownMenuItem>
-                </li>
-              </ul>
-            </div>
-          </NavItem>
+          <DropDownMenu btnIcon="far fa-user-circle" classPrefix="nav">
+            <DropDownMenuItem classPrefix="nav" id="userEmail">
+              {user.email}
+            </DropDownMenuItem>
+            <DropDownMenuItem classPrefix="nav" id="profile">
+              My Profile
+            </DropDownMenuItem>
+            <DropDownMenuItem classPrefix="nav" onClick={signOut} id="signOut">
+              Sign Out
+            </DropDownMenuItem>
+          </DropDownMenu>
         )}
       </div>
     </div>
