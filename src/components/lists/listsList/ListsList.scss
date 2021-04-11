@@ -1,0 +1,26 @@
+@import "./listItem/ListItem.scss";
+@import "./newListModal/NewListModal.scss";
+
+.lists-list-container {
+  font-size: 1em;
+  background-color: #fcfcfc;
+  margin: 0px;
+  border-radius: 0;
+  border-right: solid 1px #e4e4e4;
+  padding: 15px;
+
+  .lists-list-header {
+    font-weight: bold;
+    margin: 0px 10px 6px 10px;
+  }
+
+  li {
+    padding: 5px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}

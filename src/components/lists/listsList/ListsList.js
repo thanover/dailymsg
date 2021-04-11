@@ -3,11 +3,11 @@ import { React } from "react";
 function ListsList({ newListModal, children }) {
   return (
     <>
-      <h2>My Lists</h2>
       <ul>
+        <li className="lists-list-header">My Lists</li>
         {children}
-        <li>{newListModal}</li>
       </ul>
+      {newListModal}
     </>
   );
 }

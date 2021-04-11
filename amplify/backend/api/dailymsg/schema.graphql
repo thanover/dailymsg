@@ -5,27 +5,27 @@ schema {
 type User @model {
   id: String!
   email: String!
-  lists: [List] @connection(name: "UserLists")
+  lists: [List] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type List @model {
+type List @model @key(name: "byUser", fields: ["userId", "name"]) {
   id: ID!
   name: String!
   description: String
   sendHour: String!
   isDisabled: Boolean!
-  owner: User! @connection(name: "UserLists")
-  messages: [Message] @connection(name: "ListMessages")
+  userId: String!
+  messages: [Message] @connection(keyName: "byList", fields: ["id"])
 }
 
-type Message @model {
+type Message @model @key(name: "byList", fields: ["listId", "sendOrder"]) {
   id: ID!
   text: String!
   author: String
   source: String
-  nextSendDate: AWSDate
   lastSentDate: AWSDate
-  list: List! @connection(name: "ListMessages")
+  sendOrder: Int
+  listId: ID!
 }
 
 type Query {

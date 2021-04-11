@@ -1,0 +1,42 @@
+@import "./navdropdown/NavDropDown.scss";
+
+.header {
+  grid-row: 1/2;
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: 280px auto;
+  grid-template-areas: "logo user-options";
+
+  a {
+    color: black;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .logo-container {
+    grid-area: logo;
+    place-self: center;
+
+    .logo-link {
+      font-size: 1.5em;
+      letter-spacing: 1px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+
+      svg {
+        font-size: 1.75em;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .user-options {
+    justify-self: end;
+    grid-area: user-options;
+    align-self: center;
+    margin-right: 20px;
+  }
+}

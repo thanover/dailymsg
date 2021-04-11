@@ -1,0 +1,40 @@
+.list-options-container {
+  font-size: 1em;
+  .list-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .list-send-time,
+    .list-state {
+      display: flex;
+      align-content: center;
+    }
+
+    .list-state {
+      justify-content: center;
+    }
+
+    .list-state-label {
+      // margin-left: 2px;
+      min-width: 5em;
+    }
+
+    .list-send-time-input {
+      display: flex;
+      align-items: flex-start;
+    }
+  }
+  .form-control {
+    margin-left: 6px;
+    width: fit-content;
+    font-size: 1em;
+    padding: 0px;
+    padding-left: 5px;
+    height: calc(1em + 10px);
+
+    &::after {
+      content: none;
+    }
+  }
+}

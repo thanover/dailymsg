@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import ListEditForm from "./ListEditForm";
 import { toast } from "react-toastify";
 import { API, graphqlOperation } from "aws-amplify";
-import { createList } from "../../graphql/mutations";
+import { createList } from "../../../../graphql/mutations";
 
 const ListEditPage = ({ user, checkUser, closeModal }) => {
   const [errors, setErrors] = useState({});
@@ -12,7 +12,7 @@ const ListEditPage = ({ user, checkUser, closeModal }) => {
     id: null,
     name: "",
     listOwnerId: user.id,
-    sendHour: "08:00",
+    sendHour: "8:00 AM",
     isDisabled: false,
   });
 

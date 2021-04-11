@@ -104,6 +104,7 @@ export const createList = /* GraphQL */ `
           source
           nextSendDate
           lastSentDate
+          sendOrder
           createdAt
           updatedAt
         }
@@ -142,6 +143,7 @@ export const updateList = /* GraphQL */ `
           source
           nextSendDate
           lastSentDate
+          sendOrder
           createdAt
           updatedAt
         }
@@ -180,6 +182,7 @@ export const deleteList = /* GraphQL */ `
           source
           nextSendDate
           lastSentDate
+          sendOrder
           createdAt
           updatedAt
         }
@@ -202,6 +205,7 @@ export const createMessage = /* GraphQL */ `
       source
       nextSendDate
       lastSentDate
+      sendOrder
       list {
         id
         name
@@ -237,6 +241,7 @@ export const updateMessage = /* GraphQL */ `
       source
       nextSendDate
       lastSentDate
+      sendOrder
       list {
         id
         name
@@ -272,6 +277,7 @@ export const deleteMessage = /* GraphQL */ `
       source
       nextSendDate
       lastSentDate
+      sendOrder
       list {
         id
         name

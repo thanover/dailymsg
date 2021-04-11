@@ -6,7 +6,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { getUser } from "./graphql/queries";
 import { AuthActions } from "./components/auth/AuthActions";
 import Modal from "react-modal";
-import Header from "./components/nav/Header";
+import { Header } from "./components/nav/Header";
 import LandingPage from "./components/landing/LandingPage";
 import ListPage from "./components/lists/ListPage";
 import AuthContainer from "./components/auth/AuthContainer";
@@ -18,6 +18,7 @@ Modal.setAppElement("#root");
 function App() {
   const [user, setUser] = useState(null);
   const [cognitoUser, setCognitoUser] = useState(null);
+  const [signedIn, setSignedIn] = useState(false);
 
   let history = useHistory();
 
@@ -41,7 +42,7 @@ function App() {
           setCognitoUser(null);
         });
       if (cognitoUser) {
-        console.log("getting user...");
+        setSignedIn(true);
         try {
           API.graphql(
             graphqlOperation(getUser, { id: cognitoUser.username })
@@ -52,7 +53,8 @@ function App() {
           console.log(error);
         }
       } else {
-        history.push("./");
+        console.log("redirecting...");
+        history.push("/");
       }
     } catch (err) {
       console.log("user error:", err);
@@ -60,9 +62,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(cognitoUser);
-    console.log(`user:`);
-    console.log(user);
     if (!user && cognitoUser) {
       try {
         API.graphql(
@@ -80,6 +79,7 @@ function App() {
     try {
       Auth.signOut();
       setUser(null);
+      setSignedIn(false);
       setCognitoUser(null);
       history.push("/");
     } catch (error) {
@@ -90,7 +90,7 @@ function App() {
   return (
     <div className="grid">
       <ToastContainer autoClose={3000} hideProgressBar />
-      <Header user={user} signOut={signOut} />
+      <Header user={user} signOut={signOut} signedIn={user} />
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route

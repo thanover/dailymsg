@@ -26,6 +26,7 @@ export const getUserLists = /* GraphQL */ `
           source
           nextSendDate
           lastSentDate
+          sendOrder
           createdAt
           updatedAt
         }
@@ -103,6 +104,7 @@ export const getList = /* GraphQL */ `
           source
           nextSendDate
           lastSentDate
+          sendOrder
           createdAt
           updatedAt
         }
@@ -151,6 +153,7 @@ export const getMessage = /* GraphQL */ `
       source
       nextSendDate
       lastSentDate
+      sendOrder
       list {
         id
         name
@@ -188,6 +191,48 @@ export const listMessages = /* GraphQL */ `
         source
         nextSendDate
         lastSentDate
+        sendOrder
+        list {
+          id
+          name
+          description
+          sendHour
+          isDisabled
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesBySendOrder = /* GraphQL */ `
+  query MessagesBySendOrder(
+    $id: ID
+    $sendOrder: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesBySendOrder(
+      id: $id
+      sendOrder: $sendOrder
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        text
+        author
+        source
+        nextSendDate
+        lastSentDate
+        sendOrder
         list {
           id
           name

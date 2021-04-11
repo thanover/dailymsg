@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import ListsList from "./ListsList";
-import NewListModal from "./NewListModal";
-import ListItem from "./ListItem";
+import ListsList from "./listsList/ListsList";
+import NewListModal from "./listsList/newListModal/NewListModal";
+import ListItem from "./listsList/listItem/ListItem";
 import ListTitleDesc from "./ListTitleDesc";
-import ListOptions from "./ListOptions";
+import { ListOptions } from "./listView/listOptions/ListOptions";
 import MessageList from "../messages/MessageListPage";
 import NewMessageModal from "../messages/NewMessageModal";
-import { Redirect } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 import { getList } from "../../graphql/queries";
 import "./Lists.css";
@@ -27,12 +26,16 @@ function ListPage({ user, checkUser }) {
   const mountedRef = useRef(true);
 
   useEffect(() => {
-    if (!user) history.push("/");
     if (user) setLists(user.lists.items);
   }, [user]);
 
   useEffect(() => {
     if (activeListId) {
+      console.log(`activeListId: ${activeListId}`);
+      if (activeList) console.log(`activeList.id: ${activeList.id}`);
+      if (activeList && activeListId === activeList.id) {
+        return null;
+      }
       updateList();
     } else {
       setActiveList(null);
@@ -46,6 +49,7 @@ function ListPage({ user, checkUser }) {
   }, []);
 
   async function updateList() {
+    console.log("triggered update");
     try {
       API.graphql(graphqlOperation(getList, { id: activeListId })).then(
         (res) => {
@@ -104,8 +108,10 @@ function ListPage({ user, checkUser }) {
               return (
                 <ListItem
                   key={list.id}
-                  list={list}
+                  listId={list.id}
                   active={activeListId && activeListId === list.id}
+                  setActiveList={setActiveList}
+                  activeList={activeList}
                 />
               );
             })}
