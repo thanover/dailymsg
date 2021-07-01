@@ -23,6 +23,9 @@ function App() {
   let history = useHistory();
 
   useEffect(() => {
+    checkUser();
+    console.log(user);
+    console.log(cognitoUser);
     Auth.currentAuthenticatedUser()
       .then((cognitoUser) => {
         setCognitoUser(cognitoUser);
@@ -37,21 +40,24 @@ function App() {
       await Auth.currentAuthenticatedUser()
         .then((cognitoUser) => {
           setCognitoUser(cognitoUser);
+          console.log(cognitoUser);
+          setSignedIn(true);
+          try {
+            console.log(`getting user ${cognitoUser.username}`);
+            API.graphql(
+              graphqlOperation(getUser, { id: cognitoUser.username })
+            ).then((_user) => {
+              setUser(_user.data.getUser);
+              console.log(_user);
+            });
+          } catch (error) {
+            console.log(error);
+          }
         })
         .catch(() => {
           setCognitoUser(null);
         });
       if (cognitoUser) {
-        setSignedIn(true);
-        try {
-          API.graphql(
-            graphqlOperation(getUser, { id: cognitoUser.username })
-          ).then((_user) => {
-            setUser(_user.data.getUser);
-          });
-        } catch (error) {
-          console.log(error);
-        }
       } else {
         console.log("redirecting...");
         history.push("/");

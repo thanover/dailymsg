@@ -1,42 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUserLists = /* GraphQL */ `
-  query GetUserLists($id: ID!) {
-    getUserLists(id: $id) {
-      id
-      name
-      description
-      sendHour
-      isDisabled
-      owner {
-        id
-        email
-        lists {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      messages {
-        items {
-          id
-          text
-          author
-          source
-          nextSendDate
-          lastSentDate
-          sendOrder
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -49,6 +13,7 @@ export const getUser = /* GraphQL */ `
           description
           sendHour
           isDisabled
+          userId
           createdAt
           updatedAt
         }
@@ -87,24 +52,16 @@ export const getList = /* GraphQL */ `
       description
       sendHour
       isDisabled
-      owner {
-        id
-        email
-        lists {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userId
       messages {
         items {
           id
           text
           author
           source
-          nextSendDate
           lastSentDate
           sendOrder
+          listId
           createdAt
           updatedAt
         }
@@ -128,12 +85,7 @@ export const listLists = /* GraphQL */ `
         description
         sendHour
         isDisabled
-        owner {
-          id
-          email
-          createdAt
-          updatedAt
-        }
+        userId
         messages {
           nextToken
         }
@@ -151,27 +103,9 @@ export const getMessage = /* GraphQL */ `
       text
       author
       source
-      nextSendDate
       lastSentDate
       sendOrder
-      list {
-        id
-        name
-        description
-        sendHour
-        isDisabled
-        owner {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      listId
       createdAt
       updatedAt
     }
@@ -189,59 +123,9 @@ export const listMessages = /* GraphQL */ `
         text
         author
         source
-        nextSendDate
         lastSentDate
         sendOrder
-        list {
-          id
-          name
-          description
-          sendHour
-          isDisabled
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const messagesBySendOrder = /* GraphQL */ `
-  query MessagesBySendOrder(
-    $id: ID
-    $sendOrder: ModelIntKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    messagesBySendOrder(
-      id: $id
-      sendOrder: $sendOrder
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        text
-        author
-        source
-        nextSendDate
-        lastSentDate
-        sendOrder
-        list {
-          id
-          name
-          description
-          sendHour
-          isDisabled
-          createdAt
-          updatedAt
-        }
+        listId
         createdAt
         updatedAt
       }

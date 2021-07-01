@@ -1,14 +1,13 @@
-schema {
-  query: Query
-}
-
 type User @model {
   id: String!
   email: String!
   lists: [List] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type List @model @key(name: "byUser", fields: ["userId", "name"]) {
+type List
+  @model
+  @key(name: "byUser", fields: ["userId", "id"])
+  @key(name: "bySendHour", fields: ["sendHour", "id"]) {
   id: ID!
   name: String!
   description: String
@@ -26,8 +25,4 @@ type Message @model @key(name: "byList", fields: ["listId", "sendOrder"]) {
   lastSentDate: AWSDate
   sendOrder: Int
   listId: ID!
-}
-
-type Query {
-  getUserLists(id: ID!): [List]
 }

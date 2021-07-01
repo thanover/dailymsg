@@ -16,6 +16,7 @@ export const createUser = /* GraphQL */ `
           description
           sendHour
           isDisabled
+          userId
           createdAt
           updatedAt
         }
@@ -41,6 +42,7 @@ export const updateUser = /* GraphQL */ `
           description
           sendHour
           isDisabled
+          userId
           createdAt
           updatedAt
         }
@@ -66,6 +68,7 @@ export const deleteUser = /* GraphQL */ `
           description
           sendHour
           isDisabled
+          userId
           createdAt
           updatedAt
         }
@@ -87,24 +90,16 @@ export const createList = /* GraphQL */ `
       description
       sendHour
       isDisabled
-      owner {
-        id
-        email
-        lists {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userId
       messages {
         items {
           id
           text
           author
           source
-          nextSendDate
           lastSentDate
           sendOrder
+          listId
           createdAt
           updatedAt
         }
@@ -126,24 +121,16 @@ export const updateList = /* GraphQL */ `
       description
       sendHour
       isDisabled
-      owner {
-        id
-        email
-        lists {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userId
       messages {
         items {
           id
           text
           author
           source
-          nextSendDate
           lastSentDate
           sendOrder
+          listId
           createdAt
           updatedAt
         }
@@ -165,24 +152,16 @@ export const deleteList = /* GraphQL */ `
       description
       sendHour
       isDisabled
-      owner {
-        id
-        email
-        lists {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      userId
       messages {
         items {
           id
           text
           author
           source
-          nextSendDate
           lastSentDate
           sendOrder
+          listId
           createdAt
           updatedAt
         }
@@ -203,27 +182,9 @@ export const createMessage = /* GraphQL */ `
       text
       author
       source
-      nextSendDate
       lastSentDate
       sendOrder
-      list {
-        id
-        name
-        description
-        sendHour
-        isDisabled
-        owner {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      listId
       createdAt
       updatedAt
     }
@@ -239,27 +200,9 @@ export const updateMessage = /* GraphQL */ `
       text
       author
       source
-      nextSendDate
       lastSentDate
       sendOrder
-      list {
-        id
-        name
-        description
-        sendHour
-        isDisabled
-        owner {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      listId
       createdAt
       updatedAt
     }
@@ -275,27 +218,9 @@ export const deleteMessage = /* GraphQL */ `
       text
       author
       source
-      nextSendDate
       lastSentDate
       sendOrder
-      list {
-        id
-        name
-        description
-        sendHour
-        isDisabled
-        owner {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      listId
       createdAt
       updatedAt
     }
